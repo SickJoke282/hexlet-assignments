@@ -14,15 +14,20 @@ import exercise.model.Product;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 )
 public abstract class ProductMapper {
-    @Mapping(target = "name", source = "title")
-    @Mapping(target = "cost", source = "price")
-    @Mapping(target = "barcode", source = "vendorCode")
+    @Mapping( target = "name", source = "title" )
+    @Mapping( target = "cost", source = "price" )
+    @Mapping( target = "barcode", source = "vendorCode" )
     public abstract Product map(ProductCreateDTO dto);
 
-    @InheritConfiguration
+    @Mapping( target = "cost", source = "price" )
     public abstract void update(ProductUpdateDTO dto, @MappingTarget Product model);
 
-    @InheritInverseConfiguration
+    @Mapping( target = "id", ignore = true )
+    @Mapping( target = "title", source = "name" )
+    @Mapping( target = "createdAt", ignore = true )
+    @Mapping( target = "updatedAt", ignore = true )
+    @Mapping( target = "price", source = "cost" )
+    @Mapping( target = "vendorCode", source = "barcode" )
     public abstract ProductDTO map(Product model);
 }
 // END

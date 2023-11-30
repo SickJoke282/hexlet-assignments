@@ -43,7 +43,7 @@ public class ProductsController {
     }
 
     @GetMapping(path = "/{id}")
-    public ProductDTO show(@PathVariable long id) {
+    public ProductDTO show(@PathVariable Long id) {
         var product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
         return productMapper.map(product);
@@ -51,19 +51,20 @@ public class ProductsController {
 
     @PostMapping(path = "")
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductDTO create(@RequestBody ProductCreateDTO productData) {
+    public ProductDTO create(@RequestBody  ProductCreateDTO productData) {
         var product = productMapper.map(productData);
         productRepository.save(product);
         return productMapper.map(product);
     }
 
     @PutMapping(path = "/{id}")
-    public ProductDTO update(@PathVariable long id, @RequestBody ProductUpdateDTO data) {
+    public ProductDTO update(@PathVariable Long id, @RequestBody ProductUpdateDTO data) {
         var product = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not Found"));
         productMapper.update(data, product);
         productRepository.save(product);
         return productMapper.map(product);
     }
+
     // END
 }
