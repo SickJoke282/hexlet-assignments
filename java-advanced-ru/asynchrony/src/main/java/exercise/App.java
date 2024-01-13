@@ -15,12 +15,15 @@ class App {
         return CompletableFuture.supplyAsync(() -> {
             Path path = Paths.get(directoryPath);
             try {
-                var list = Files.list(path).toList();
-                long size = 0L;
-                for (var p : list) {
-                    size = Files.isDirectory(p) ? size : size + 1;
-                }
-                return size;
+                return Files.walk(path, 1)
+                        .filter(Files::isRegularFile)
+                        .mapToLong(p -> {
+                            try {
+                                return Files.size(p);
+                            } catch (IOException e) {
+                                throw new RuntimeException();
+                            }
+                        }).sum();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

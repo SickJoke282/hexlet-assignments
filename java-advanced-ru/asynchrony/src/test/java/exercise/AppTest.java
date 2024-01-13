@@ -49,7 +49,7 @@ class AppTest {
     @Test
     void testGetDirectorySize() throws Exception {
         long size = App.getDirectorySize("src/test/resources/dir").get();
-        assertThat(size).isEqualTo(3);
+        assertThat(size).isEqualTo(26);
     }
     // END
 }
